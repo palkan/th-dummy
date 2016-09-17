@@ -4,8 +4,6 @@ class AnswersController < ApplicationController
   before_action :set_question, only: [:create]
   before_action :set_answer, only: [:destroy, :update, :best]
 
-  after_action :publish_answer, only: [:create]
-
   def create
     authorize Answer
     @answer = @question.answers.create(
@@ -42,10 +40,5 @@ class AnswersController < ApplicationController
   def set_answer
     @answer = Answer.find(params[:id])
     authorize @answer
-  end
-
-  def publish_answer
-    return if @answer.errors.any?
-    ActionCable.server.broadcast "questions/#{@answer.question_id}/answers", @answer
   end
 end

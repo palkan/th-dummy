@@ -44,7 +44,7 @@ feature "create answer", :js do
     end
   end
 
-  context "multiple sessions", :cable do
+  xcontext "multiple sessions", :cable do
     scenario "all users see new answer in real-time" do
       Capybara.using_session("author") do
         sign_in(user)

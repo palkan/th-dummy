@@ -75,16 +75,3 @@ $ ->
     answersList.find('.answer-best-badge').remove()
     $(e.target).closest('.answer')?.remove()
     answersList.prepend App.utils.render('answer', data.answer)
-
-  App.cable.subscriptions.create "AnswersChannel", {
-    connected: ->
-      @follow()
-
-    follow: ->
-      return unless gon.question_id
-      @perform 'follow', id: gon.question_id
-
-    received: (data) ->
-      appendAnswer(data)
-  }
-

@@ -37,22 +37,20 @@ class QuestionsController < ApplicationController
     params.require(:question).permit(:title, :body)
   end
 
+  def publish_question
+    return if @question.errors.any?
+    ActionCable.server.broadcast(
+      'questions',
+      ApplicationController.render(
+        partial: 'questions/question',
+        locals: { question: @question }
+      )
+    )
+  end
+
   def set_question
     @question = Question.find(params[:id])
     authorize @question
     gon.question_id = @question.id
-  end
-
-  def publish_question
-    return if @question.errors.any?
-    ActionCable.server.broadcast(
-      "questions",
-      {
-        question: ApplicationController.render(
-          locals: { question: @question },
-          partial: 'questions/question'
-        )
-      }
-    )
   end
 end

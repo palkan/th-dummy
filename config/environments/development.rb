@@ -41,5 +41,5 @@ Rails.application.configure do
 
   config.action_mailer.default_url_options = { host: 'localhost', port: 3000 }
 
-  config.middleware.insert_after ActionDispatch::Static, Rack::LiveReload
+  # config.middleware.insert_after ActionDispatch::Static, Rack::LiveReload
 end

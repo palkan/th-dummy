@@ -31,25 +31,18 @@ feature 'create question', :js do
     end
   end
 
-  context "as guest" do
-    xscenario 'can not create question', :visual do
-      visit questions_path
-      expect(page).to match_reference_screenshot
-    end
-  end
-
-  context "multiple sessions", :cable do
-    scenario "all users see new question in real-time" do
-      Capybara.using_session('author') do
+  context "mulitple sessions" do
+    scenario "question appears on another user's page" do
+      Capybara.using_session('user') do
         sign_in(user)
         visit questions_path
       end
-
+ 
       Capybara.using_session('guest') do
         visit questions_path
       end
 
-      Capybara.using_session('author') do
+      Capybara.using_session('user') do
         page.find("#add_question_btn").trigger('click')
 
         fill_in 'Title', with: 'Test question'
@@ -61,8 +54,14 @@ feature 'create question', :js do
 
       Capybara.using_session('guest') do
         expect(page).to have_content 'Test question'
-        expect(page).to_not have_content 'No questions found('
       end
+    end
+  end  
+
+  context "as guest" do
+    xscenario 'can not create question', :visual do
+      visit questions_path
+      expect(page).to match_reference_screenshot
     end
   end
 end
