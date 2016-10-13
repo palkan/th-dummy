@@ -3,6 +3,8 @@
     - if answer.best?
       span.badge.green.white-text.answer-best-badge best
     p.answer-body =answer.body
+    p =answer.user&.email
+
     = render 'shared/votes', votable: answer
 
     .answer-controls

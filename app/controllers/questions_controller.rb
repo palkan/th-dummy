@@ -8,7 +8,7 @@ class QuestionsController < ApplicationController
   after_action :publish_question, only: [:create]
 
   def index
-    @questions = policy_scope(Question)
+    @questions = policy_scope(Question).includes(:user)
   end
 
   def show

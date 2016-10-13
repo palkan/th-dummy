@@ -36,6 +36,10 @@ group :development, :test do
   gem 'meta_request'
   gem 'faker'
   gem 'parallel_tests', '~> 1'
+
+  gem 'bullet'
+  gem 'rack-mini-profiler', require: false
+  gem 'active_record_query_trace', require: false
 end
 
 group :test do
@@ -63,4 +67,7 @@ group :development do
   gem 'guard-livereload', require: false
   gem 'rack-livereload'
   gem 'terminal-notifier-guard', require: false
+
+  gem 'brakeman', require: false
+  gem 'bundler-audit', require: false
 end

@@ -3,6 +3,21 @@ require 'rails_helper'
 describe QuestionsController, :auth do
   let(:question) { create(:question, user: user) }
 
+  describe "GET #index", :unauth do
+    render_views
+
+    specify do
+      get :index
+      expect(response).to be_success
+    end
+
+    context "N+1" do
+      let!(:questions) { create_list(:question, 4) }
+
+      bulletify { get :index }
+    end
+  end
+
   describe "GET #show", :unauth do
     render_views
 

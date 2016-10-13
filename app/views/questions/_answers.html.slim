@@ -1,4 +1,4 @@
 .answers-content
   .answers.collection#answers_list
-    - @question.answers.each do |answer|
+    - @question.answers.includes(:user).each do |answer|
       = render answer

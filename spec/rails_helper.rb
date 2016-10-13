@@ -25,6 +25,8 @@ RSpec.configure do |config|
 
   config.fixture_path = "#{::Rails.root}/spec/fixtures"
 
+  config.alias_example_to :bulletify, bullet: true
+
   config.use_transactional_fixtures = true
 
   config.filter_rails_from_backtrace!

@@ -41,7 +41,9 @@ Rails.application.configure do
   # Print deprecation notices to the stderr.
   config.active_support.deprecation = :stderr
 
-  config.logger = Logger.new(STDOUT) if ENV["LOG"].present?
+  config.assets.quiet = true
+
+  config.logger = Logger.new(STDOUT) if Nenv.log?
 
   # Raises error for missing translations
   # config.action_view.raise_on_missing_translations = true
