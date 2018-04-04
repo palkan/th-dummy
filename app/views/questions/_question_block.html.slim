@@ -5,10 +5,10 @@
     = render 'shared/votes', votable: @question
   .question-controls
     .row
-      - if policy(@question).update?
+      - if allowed_to?(:update?, @question)
         .col
           = link_to 'Edit', '', class: 'edit-question-link', id: "add_question_btn"
-      - if policy(@question).destroy?
+      - if allowed_to?(:destroy?, @question)
         .col
           = link_to 'Delete', @question, method: :delete
 

@@ -1,4 +1,4 @@
-class ApplicationPolicy
+class ApplicationPolicy < ActionPolicy::Base
   class Scope
     attr_reader :user, :scope
 
@@ -36,7 +36,9 @@ class ApplicationPolicy
 
   attr_reader :user, :target
 
-  def initialize(user, target)
+  alias record target
+
+  def initialize(target, user:)
     @user = user
     @target = target
   end
@@ -53,14 +55,6 @@ class ApplicationPolicy
     user?
   end
 
-  def update?
-    manage?
-  end
-
-  def destroy?
-    update?
-  end
-
   def manage?
     user? && author?
   end
@@ -73,9 +67,5 @@ class ApplicationPolicy
 
   def author?(obj = target)
     user.id == obj.user_id
-  end
-
-  def policy_for(obj)
-    Pundit.policy(user, obj)
   end
 end

@@ -10,6 +10,10 @@ shared_examples "voted" do |votable_type|
 
     subject { post :cancel_vote, params: { id: votable } }
 
+    specify do
+      expect { subject }.to be_authorized_to(:cancel_vote?, votable)
+    end
+
     it 'destroy vote' do
       expect { subject }.to change(Vote, :count).by(-1)
     end
@@ -19,6 +23,10 @@ end
 shared_examples "voted: create vote" do |action, delta|
 	describe "POST ##{action}" do
     subject { post action, params: { id: votable, format: :json } }
+
+    specify do
+      expect { subject }.to be_authorized_to(:"#{action}?", votable)
+    end
 
     it "change Votes count" do
       expect { subject }.to change(votable.votes, :count).by(1)

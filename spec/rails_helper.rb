@@ -6,7 +6,10 @@ abort("The Rails environment is running in production mode!") if Rails.env.produ
 require 'spec_helper'
 require 'action_cable/testing/rspec'
 require 'rspec/rails'
-require 'lurker/spec_helper'
+# require 'lurker/spec_helper'
+# require 'pundit/rspec'
+require 'action_policy/rspec'
+require 'action_policy/rspec/pundit_syntax'
 
 Dir[Rails.root.join('spec/support/**/*.rb')].each { |f| require f }
 Dir[Rails.root.join("spec/shared_contexts/**/*.rb")].each { |f| require f }
@@ -36,6 +39,8 @@ RSpec.configure do |config|
   config.filter_rails_from_backtrace!
 
   config.infer_spec_type_from_file_location!
+
+  config.filter_run_excluding(type: :feature) unless ENV['FEATURES'] == '1'
 
   config.after(:each) do
     ActionCable.server.pubsub.try(:reset!)

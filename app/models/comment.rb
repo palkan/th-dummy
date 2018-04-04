@@ -4,7 +4,7 @@ class Comment < ApplicationRecord
 
   validates :user_id, :body, :commentable_id, presence: true
 
-  after_create :notify_author
+  after_create_commit :notify_author
 
   private
 

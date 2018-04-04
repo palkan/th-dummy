@@ -13,7 +13,8 @@ gem 'materialize-sass'
 gem 'material_icons'
 
 gem 'skim'
-gem 'pundit'
+# gem 'pundit'
+gem 'action_policy', path: '../action_policy'
 gem 'active_model_serializers'
 
 gem 'devise'
@@ -39,21 +40,24 @@ group :development, :test do
   gem 'meta_request'
   gem 'faker'
   gem 'parallel_tests', '~> 1'
+
+  gem 'isolator'
 end
 
 group :test do
   gem 'rspec-rails'
+  gem 'minitest', '5.10.0'
   gem 'poltergeist'
   gem 'shoulda-matchers'
   gem 'capybara', '2.10.1'
   gem 'email_spec'
   gem 'json_spec'
   gem 'fuubar'
-  gem 'rspec-page-regression', github: 'teachbase/rspec-page-regression', branch: 'use-imatcher'
+  # gem 'rspec-page-regression', github: 'teachbase/rspec-page-regression', branch: 'use-imatcher'
   gem 'rack_session_access'
   gem 'test-prof'
-  gem 'action-cable-testing', path: '../action-cable-testing'
-  gem 'lurker', path: '../lurker'
+  gem 'action-cable-testing'
+  # gem 'lurker'
 end
 
 group :development do

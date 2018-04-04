@@ -1,16 +1,27 @@
 class ApplicationController < ActionController::Base
   include Serialized
-  include Pundit
+  # include Pundit
 
   protect_from_forgery with: :exception
 
-  rescue_from Pundit::NotAuthorizedError, with: :permission_error
+  rescue_from ActionPolicy::Unauthorized, with: :permission_error
 
   before_action :authenticate_user!, unless: :devise_controller?
   before_action :gon_user, unless: :devise_controller?
 
   after_action :verify_authorized, except: :index, unless: :devise_controller?
   after_action :verify_policy_scoped, only: :index, unless: :devise_controller?
+
+  # Pundit fallback
+  alias authorize authorize!
+
+  authorize :current_user, as: :user
+
+  helper_method :policy
+
+  def policy(record)
+    policy_for(record: record)
+  end
 
   private
 

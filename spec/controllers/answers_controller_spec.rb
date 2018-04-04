@@ -16,6 +16,10 @@ describe AnswersController, :auth do
 
     subject { post :create, params: params }
 
+    specify do
+      expect { subject }.to be_authorized_to(:create?, Answer)
+    end
+
     it 'create answer for question' do
       expect { subject }.to change(question.answers, :count).by(1)
     end
@@ -40,6 +44,10 @@ describe AnswersController, :auth do
 
     subject { delete :destroy, params: { id: answer, format: :js } }
 
+    specify do
+      expect { subject }.to be_authorized_to(:manage?, answer)
+    end
+
     it 'delete answer' do
       expect { subject }.to change(Answer, :count).by(-1)
     end
@@ -58,6 +66,10 @@ describe AnswersController, :auth do
     end
 
     subject { patch :update, params: params }
+
+    specify do
+      expect { subject }.to be_authorized_to(:manage?, answer)
+    end
 
     it 'change answer' do
       subject
@@ -79,6 +91,10 @@ describe AnswersController, :auth do
     let!(:answer) { create(:answer, question: question) }
 
     subject { post :best, params: { id: answer, format: :js } }
+
+    specify do
+      expect { subject }.to be_authorized_to(:best?, answer)
+    end
 
     it "change best status" do
       subject
